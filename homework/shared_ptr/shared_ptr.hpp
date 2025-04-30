@@ -95,19 +95,16 @@ public:
     }
 
     void reset(Type* ptr = nullptr, std::function<void(Type*)> d = default_deleter<Type>) {
-        if (ptr_ && ctrl_block_->shared_refs > 0) {
+        if (ptr_ && ctrl_block_->shared_refs == 1) {
             ctrl_block_->deleter(ptr_);
             ptr_ = ptr;
             ctrl_block_->deleter = d;
         } else if (!ptr_) {
             if (ctrl_block_) {
                 ptr_ = ptr;
-                ctrl_block_->shared_refs++;
-            } else {
-                ptr_ = ptr;
-                ctrl_block_ = new ControlBlock<Type>{0, 0, d};
-                ctrl_block_->shared_refs++;
+                ctrl_block_->shared_refs = 1;
             }
+        } else {
         }
     }
 };
