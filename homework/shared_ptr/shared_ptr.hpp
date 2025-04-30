@@ -58,7 +58,7 @@ public:
         return *this;
     }
 
-    shared_ptr& operator=(const shared_ptr&& other)
+    shared_ptr& operator=(shared_ptr&& other)
     {
         ptr_ = other.ptr_;
         ctrl_block_ = other.ctrl_block_;
