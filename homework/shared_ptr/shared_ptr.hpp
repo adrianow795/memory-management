@@ -55,6 +55,7 @@ public:
     {
         ptr_ = other.ptr_;
         ctrl_block_ = other.ctrl_block_;
+        return *this;
     }
 
     shared_ptr& operator=(const shared_ptr&& other)
@@ -63,6 +64,7 @@ public:
         ctrl_block_ = other.ctrl_block_;
         other.ptr_ = nullptr;
         other.ctrl_block_ = nullptr;
+        return *this;
     }
 
     Type* operator->() {
