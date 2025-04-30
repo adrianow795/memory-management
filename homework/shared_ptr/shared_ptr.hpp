@@ -73,7 +73,7 @@ public:
         return ptr_;
     }
 
-    void reset(Type* ptr, std::function<void(Type*)> d = default_deleter<Type>)
+    void reset(Type* ptr = nullptr, std::function<void(Type*)> d = default_deleter<Type>)
     {
         if(ptr_ && ctrl_block_->shared_refs > 0)
         {
@@ -102,3 +102,4 @@ public:
 
 }  // namespace my
 #endif /* SHARED_PRT_H_*/
+
