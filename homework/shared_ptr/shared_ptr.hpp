@@ -51,10 +51,23 @@ public:
         }
     }
 
-    shared_ptr& operator=(const shared_ptr& other)
+    shared_ptr& operator=(shared_ptr& other)
     {
+        if(ptr_ != other.ptr_)
+        {
+            if(ctrl_block_->shared_refs == 1u)
+            {
+                ctrl_block_->deleter(ptr_);
+                delete ctrl_block_;
+            }
+            else
+            {
+                ctrl_block_->shared_refs--;
+            }
+        }
         ptr_ = other.ptr_;
         ctrl_block_ = other.ctrl_block_;
+        ctrl_block_->shared_refs++;
         return *this;
     }
 
