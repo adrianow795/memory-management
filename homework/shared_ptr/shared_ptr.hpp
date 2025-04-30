@@ -23,10 +23,8 @@ private:
     ControlBlock<Type>* ctrl_block_;
 
 public:
-    shared_ptr(Type* ptr, std::function<void(Type*)> d = default_deleter<Type>)
-        : ptr_(ptr), ctrl_block_(new ControlBlock<Type>{0, 0, d}) {
-        // ctrl_block_ = new ControlBlock<Type>{0,0,nullptr};
-        ctrl_block_->shared_refs++;
+    shared_ptr(Type* ptr = nullptr, std::function<void(Type*)> d = default_deleter<Type>)
+        : ptr_(ptr), ctrl_block_(new ControlBlock<Type>{1, 0, d}) {
     }
 
     shared_ptr(const shared_ptr& other)
