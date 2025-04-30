@@ -51,17 +51,12 @@ public:
         }
     }
 
-    shared_ptr& operator=(shared_ptr& other)
-    {
-        if(ptr_ != other.ptr_)
-        {
-            if(ctrl_block_->shared_refs == 1u)
-            {
+    shared_ptr& operator=(shared_ptr& other) {
+        if (ptr_ != other.ptr_) {
+            if (ctrl_block_->shared_refs == 1u) {
                 ctrl_block_->deleter(ptr_);
                 delete ctrl_block_;
-            }
-            else
-            {
+            } else {
                 ctrl_block_->shared_refs--;
             }
         }
@@ -71,8 +66,7 @@ public:
         return *this;
     }
 
-    shared_ptr& operator=(shared_ptr&& other)
-    {
+    shared_ptr& operator=(shared_ptr&& other) {
         ptr_ = other.ptr_;
         ctrl_block_ = other.ctrl_block_;
         other.ptr_ = nullptr;
@@ -100,33 +94,23 @@ public:
         return ptr_;
     }
 
-    void reset(Type* ptr = nullptr, std::function<void(Type*)> d = default_deleter<Type>)
-    {
-        if(ptr_ && ctrl_block_->shared_refs > 0)
-        {
+    void reset(Type* ptr = nullptr, std::function<void(Type*)> d = default_deleter<Type>) {
+        if (ptr_ && ctrl_block_->shared_refs > 0) {
             ctrl_block_->deleter(ptr_);
             ptr_ = ptr;
             ctrl_block_->deleter = d;
-        }
-        else if(!ptr_)
-        {
-            if(ctrl_block_)
-            {
+        } else if (!ptr_) {
+            if (ctrl_block_) {
                 ptr_ = ptr;
                 ctrl_block_->shared_refs++;
-            }
-            else
-            {
+            } else {
                 ptr_ = ptr;
                 ctrl_block_ = new ControlBlock<Type>{0, 0, d};
                 ctrl_block_->shared_refs++;
             }
-
         }
-
     }
 };
 
 }  // namespace my
 #endif /* SHARED_PRT_H_*/
-
