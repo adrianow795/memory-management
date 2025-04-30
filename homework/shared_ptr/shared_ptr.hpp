@@ -53,6 +53,20 @@ public:
         }
     }
 
+    shared_ptr& operator=(const shared_ptr& other)
+    {
+        ptr_ = other.ptr_;
+        ctrl_block_ = other.ctrl_block_;
+    }
+
+    shared_ptr& operator=(const shared_ptr&& other)
+    {
+        ptr_ = other.ptr_;
+        ctrl_block_ = other.ctrl_block_;
+        other.ptr_ = nullptr;
+        other.ctrl_block_ = nullptr;
+    }
+
     Type* operator->() {
         return ptr_;
     }
