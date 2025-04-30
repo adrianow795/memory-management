@@ -67,6 +67,14 @@ public:
     }
 
     shared_ptr& operator=(shared_ptr&& other) {
+        if (ptr_ != other.ptr_) {
+            if (ctrl_block_->shared_refs == 1u) {
+                ctrl_block_->deleter(ptr_);
+                delete ctrl_block_;
+            } else {
+                ctrl_block_->shared_refs--;
+            }
+        }
         ptr_ = other.ptr_;
         ctrl_block_ = other.ctrl_block_;
         other.ptr_ = nullptr;
@@ -103,6 +111,9 @@ public:
             if (ctrl_block_) {
                 ptr_ = ptr;
                 ctrl_block_->shared_refs = 1;
+            } else {
+                ctrl_block_ = new ControlBlock<Type>{1, 0, d};
+                ptr_ = ptr;
             }
         } else {
         }
