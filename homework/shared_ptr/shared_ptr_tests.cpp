@@ -27,5 +27,5 @@ TEST(SharedPtr, shouldCreateWithMoveConstructor) {
     p2.reset();
     ASSERT_EQ(p2.get(), nullptr);
     p2.reset(new int(6));
-    ASSERT_EQ(*p2, 5);
+    ASSERT_EQ(*p2, 6);
 }
