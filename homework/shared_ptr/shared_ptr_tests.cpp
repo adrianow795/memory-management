@@ -9,8 +9,8 @@ TEST(SharedPtr, shouldCreateSharedPtrWithInitialValue) {
 }
 
 TEST(SharedPtr, shouldCreateWithCopyConstructor) {
-    my::shared_ptr<int> p {new int(5)};
-    my::shared_ptr<int> p2 (p);
+    my::shared_ptr<int> p{new int(5)};
+    my::shared_ptr<int> p2(p);
 
     ASSERT_EQ(p.get(), p2.get());
     ASSERT_EQ(p.operator->(), p2.get());
@@ -19,8 +19,8 @@ TEST(SharedPtr, shouldCreateWithCopyConstructor) {
 }
 
 TEST(SharedPtr, shouldCreateWithMoveConstructor) {
-    my::shared_ptr<int> p {new int(5)};
-    my::shared_ptr<int> p2 (std::move(p));
+    my::shared_ptr<int> p{new int(5)};
+    my::shared_ptr<int> p2(std::move(p));
 
     ASSERT_EQ(p.get(), nullptr);
     ASSERT_EQ(p2.use_count(), 1);
